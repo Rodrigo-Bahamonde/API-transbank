@@ -1,12 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import router from '../routes/compras.js'
+import dbConnection from '../database/config.js'
 
 class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
         this.usuariosPath = '/api/compras'
+
+        //Conexion db
+        this.conectarDB();
 
         //Middlewares
         this.middlewares();
@@ -36,7 +40,9 @@ class Server {
         this.app.use(this.usuariosPath, router);
     }
 
-
+    async conectarDB() {
+        await dbConnection();
+    }
 }
 
 export default Server;
